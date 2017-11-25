@@ -25,11 +25,44 @@ const findUser = (name) => {
             db.close();
         }
     );
-}
+};
 
-module.exports={
+// Update User
+const updateUser = (_id, user) => {
+    User.update({_id}, user).then(
+        (user) => {
+            console.log("User updated");
+            db.close();
+        }
+    );
+};
+
+// Delete User
+const removeUser = (_id) => {
+    User.remove({_id}).then(
+        (user) => {
+            console.log("User removed");
+            db.close();
+        }
+    );
+};
+
+// List all customers
+const listUsers = () => {
+    User.find().then((users) => {
+        console.log(users);
+        console.log(`${users.length} Users`);
+        db.close();
+    });
+};
+
+
+module.exports = {
     findUser,
-    addUser
+    addUser,
+    removeUser,
+    updateUser,
+    listUsers
 };
 
 
