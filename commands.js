@@ -1,7 +1,7 @@
-/*jshint esversion: 6 */
+#!/usr/bin/env node
 const program = require('commander');
 const {prompt} = require('inquirer');
-const {addUser, findUser} = require('./index');
+const {addUser, findUser, removeUser, updateUser, listUsers} = require('./index');
 
 //User Questions
 const questions = [
@@ -32,6 +32,8 @@ program
     .description('User Management System');
 
 // With inquirer
+
+//Add User
 program
     .command('add')
     .alias('a')
@@ -40,14 +42,41 @@ program
         prompt(questions).then(answers => addUser(answers));
     });
 
+// Find User
 program
     .command('find <name>')
     .alias('f')
-    .description('find user by name')
+    .description('Find user by name')
     .action((name) => {
         findUser(name);
     });
 
+// List all user
+program
+    .command('list')
+    .alias('l')
+    .description('List all Users')
+    .action(()=>{
+        listUsers();
+    });
+
+//Update User
+program
+    .command('update <id>')
+    .alias('u')
+    .description('Update a user')
+    .action((id) => {
+        prompt(questions).then(answers => updateUser(id,answers));
+    });
+
+// Delete User
+program
+    .command('remove <id>')
+    .alias('r')
+    .description('Remove a User')
+    .action(id=>{
+        removeUser(id);
+    });
 
 program.parse(process.argv);
 
